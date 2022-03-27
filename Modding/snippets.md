@@ -96,3 +96,36 @@ This will add them to the base game tips without overwriting them or other modde
         }
     }
 ```
+
+## Basic U10 LiquidData class
+
+Allows to make scripts for potions. Reference it in a Liquid JSON. Remember it runs about every second the liquid touches a creature's head. Place your code where "//Code here" is, the rest is mostly there to make the potion blots appear.
+
+```csharp
+public override void OnLiquidReception(
+      LiquidReceiver liquidReceiver,
+      float dilution,
+      LiquidContainer liquidContainer)
+    {
+      if (!liquidReceiver.collisionHandler.isRagdollPart)
+        return;
+
+      //Code here
+
+      List<RevealMaterialController> bodyRevealRmc = new List<RevealMaterialController>();
+      List<RevealMaterialController> outfitRmc = new List<RevealMaterialController>();
+      foreach (Creature.RendererData renderer in liquidReceiver.collisionHandler.ragdollPart.ragdoll.creature.renderers)
+      {
+        if ((bool) (UnityEngine.Object) renderer.revealDecal && (bool) (UnityEngine.Object) renderer.revealDecal.revealMaterialController)
+        {
+          if (renderer.revealDecal.type == RevealDecal.Type.Body)
+            bodyRevealRmc.Add(renderer.revealDecal.revealMaterialController);
+          else if (renderer.revealDecal.type == RevealDecal.Type.Outfit)
+            outfitRmc.Add(renderer.revealDecal.revealMaterialController);
+        }
+      }
+      if (this.blitCoroutine != null)
+        liquidReceiver.StopCoroutine(this.blitCoroutine);
+      this.blitCoroutine = liquidReceiver.StartCoroutine(this.BlitCoroutine(bodyRevealRmc, outfitRmc, liquidReceiver.collisionHandler.ragdollPart.ragdoll.creature, dilution));
+    }
+```

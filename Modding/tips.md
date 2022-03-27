@@ -26,4 +26,4 @@ public class MyLevelModule : LevelModule
 ## How to create an audio container
 
 
-<div class='gfyitem' data-controls='false' data-expand='true' data-id='#{splendidphysicalbactrian}'></div>
+<div style='position:relative; padding-bottom:calc(102.32% + 44px)'><iframe src='https://gfycat.com/ifr/SplendidPhysicalBactrian' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen></iframe></div>

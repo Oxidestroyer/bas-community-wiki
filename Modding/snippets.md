@@ -63,3 +63,36 @@ public static void Set<T>( this object source, string fieldName, T val ) {
 }
 ```
 
+## Adding custom tips
+
+Create a level module which on load adds your tips to the catalog at runtime.
+This will add them to the base game tips without overwriting them or other modders ones.
+
+```csharp
+    public class AddLoadingScreenTips : LevelModule {
+        public List<string> tips = new List<string> {
+            "Tip1",
+            "Tip2",
+            "Tip3"
+        };
+        public override IEnumerator OnLoadCoroutine() {
+            AddTips();
+            return base.OnLoadCoroutine();
+        }
+        private void AddTips() {
+            var textData = Catalog.GetTextData();
+            if ( textData.GetGroup("Tips") != null ) {
+                var tips = textData.GetGroup("Tips");
+                int id = tips.texts.Count;
+                foreach ( string t in this.tips ) {
+                    id++;
+                    var tip = new TextData.TextID {
+                        id = id.ToString(),
+                        text = t
+                    };
+                    tips.texts.Add(tip);
+                }
+            }
+        }
+    }
+```

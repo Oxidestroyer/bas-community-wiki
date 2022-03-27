@@ -11,7 +11,6 @@
 Catalog.InstantiateAsync<GameObject>("myPrefabGameObject", myGameObject => {
   myGameObject.transform.position = whatever;
 }, "SpawningMyGameObject");
-{{ "{% endhighlight " }}%}  
 ```
 
 #### Is Player holding an Item with Telekinesis
